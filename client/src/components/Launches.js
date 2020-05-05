@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
 
@@ -14,23 +14,21 @@ const LAUNCHES_QUERY = gql`
 `
 
 const Launches = () => {
-    
   const { loading, error, data } = useQuery(LAUNCHES_QUERY)
-  console.log(data)
 
-//   const getLaunches = () => {
-//     if (loading) {
-//       console.log('loading ', loading)
-//       return <div>Loading..</div>
-//     }
-//     if (error) console.log(error)
-//     console.log('loading ', loading)
-//   }
+  const getLaunches = () => {
+    if (loading) {
+      return <div>Loading..</div>
+    }
+    if (error) console.log(error)
+
+    return data.launches.map((launch, i) => <div key={i}>{launch.mission_name}</div>)
+  }
 
   return (
     <div>
       <h1 className='display-4 my-3'>Launches</h1>
-      {/* {getLaunches()} */}
+      {getLaunches()}
     </div>
   )
 }
